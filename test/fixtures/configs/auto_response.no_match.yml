@@ -1,0 +1,8 @@
+auto_response:
+  - on_label: something_else
+    create_comment: |
+      Hello there,
+
+      Thanks for writing in, but unfortunately, we can't help you with your query.
+
+      [/send]

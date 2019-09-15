@@ -1,0 +1,9 @@
+name: "Yetto Actions"
+author: "BottleCap Technology"
+description: "A Yetto integration with GitHub Actions."
+runs:
+  using: "docker"
+  image: "Dockerfile"
+branding:
+  icon: "user-check"
+  color: "purple"

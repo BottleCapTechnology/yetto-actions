@@ -1,0 +1,20 @@
+{
+  "action": "closed",
+  "repository": {
+    "owner": {
+      "login": "user"
+    },
+    "name": "test"
+  },
+  "issue": {
+    "number": 3,
+    "labels": [
+      {
+        "name": "big-bad-boom"
+      }
+    ]
+  },
+  "sender": {
+    "type": "User"
+  }
+}

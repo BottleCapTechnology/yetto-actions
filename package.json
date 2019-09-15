@@ -1,0 +1,48 @@
+{
+  "name": "yetto-actions",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Actions catered towards users of Yetto and support teams ",
+  "main": "./main.js",
+  "scripts": {
+    "test": "jest",
+    "lint:test": "prettier --check ./**/*.js ",
+    "lint:fix": "prettier --write ./**/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BottleCapTechnology/yetto-actions.git"
+  },
+  "keywords": [
+    "github",
+    "github actions",
+    "yetto"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BottleCapTechnology/yetto-actions/issues"
+  },
+  "homepage": "https://github.com/BottleCapTechnology/yetto-actions",
+  "devDependencies": {
+    "decache": "^4.5.1",
+    "nock": "^11.3.3",
+    "prettier": "1.16.1"
+  },
+  "dependencies": {
+    "@actions/github": "^1.1.0",
+    "@octokit/rest": "^16.28.0",
+    "js-yaml": "^3.13.1",
+    "p-iteration": "^1.1.8"
+  },
+  "jest": {
+    "clearMocks": true,
+    "moduleFileExtensions": [
+      "js"
+    ],
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/index.test.js"
+    ],
+    "verbose": true
+  }
+}

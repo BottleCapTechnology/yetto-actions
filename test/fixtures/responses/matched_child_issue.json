@@ -1,0 +1,17 @@
+[
+  {
+    "id": 192,
+    "number": 1347,
+    "state": "open",
+    "title": "Found a bug",
+    "body": "I'm having a problem with this.",
+    "labels": [
+      {
+        "name": "child_of_big-bad-boom",
+        "description": "Something isn't working",
+        "color": "f29513",
+        "default": true
+      }
+    ]
+  }
+]

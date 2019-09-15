@@ -1,0 +1,9 @@
+close_child_issues:
+  - on_label_parent: big-bad-boom
+    for_label_child: missing-label
+    create_comment: |
+      Hey there, just letting you know we fixed this problem.
+
+      Thanks so much.
+
+      [/send]
