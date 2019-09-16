@@ -1,0 +1,11 @@
+on: [issues, issue_comment]
+name: Yetto Actions
+jobs:
+  yetto_action:
+    name: Perform Yetto Action
+    runs-on: ubuntu-latest
+    steps:
+      - name: Yetto Action
+        uses: BottleCapTechnology/yetto-actions@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

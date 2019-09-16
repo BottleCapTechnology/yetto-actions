@@ -1,0 +1,21 @@
+auto_response:
+  - on_label: not-this-product
+    create_comment: |
+      Hello there,
+
+      Thanks for writing in, but unfortunately, we can't help you with your query.
+
+      [/send]
+close_child_issues:
+  - on_label_parent: big-bad-boom
+    for_label_child: child_of_big-bad-boom
+    create_comment: |
+      Hey there, just letting you know we fixed this problem.
+
+      Thanks so much.
+
+      [/send]
+custom_command:
+  - on_phrase: "[/ping on-call]"
+    create_comment: |
+      @SKaLover95, this is your area of expertise, right? Can you help out?
