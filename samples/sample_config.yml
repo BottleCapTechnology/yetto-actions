@@ -18,4 +18,4 @@ close_child_issues:
 custom_command:
   - on_phrase: "[/ping on-call]"
     create_comment: |
-      @SKaLover95, this is your area of expertise, right? Can you help out?
+      @SkaLover95, this is your area of expertise, right? Can you help out?
