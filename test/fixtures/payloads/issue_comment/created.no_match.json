@@ -7,9 +7,9 @@
     "name": "test"
   },
   "issue": {
-    "number": 12
+    "number": 13
   },
   "comment": {
-    "body": "Hmm, I am not too sure.... [/ping on-call]"
+    "body": "[/ping on-call] Am I doing this right?"
   }
 }
