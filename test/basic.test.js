@@ -4,8 +4,8 @@ const nock = require("nock");
 describe("Basic tests", () => {
   let main;
 
-  it("assures me that it only runs on relevant actions", async () => {
-    loadPayload("other");
+  it("assures me that it only runs on relevant events", async () => {
+    loadPayload("gollum", "other");
     main = require("../main");
 
     const warnSpy = jest.spyOn(console, "warn").mockImplementation(jest.fn());
@@ -13,14 +13,29 @@ describe("Basic tests", () => {
     await main.run();
 
     expect(warnSpy).toHaveBeenCalledWith(
-      'Wanted a "labeled" or "closed" event, but got "opened"'
+      "Expected an `issues` or `issue_comment` event, but got `gollum`"
+    );
+
+    warnSpy.mockRestore();
+  });
+
+  it("assures me that it only runs on relevant actions", async () => {
+    loadPayload("issues", "other");
+    main = require("../main");
+
+    const warnSpy = jest.spyOn(console, "warn").mockImplementation(jest.fn());
+
+    await main.run();
+
+    expect(warnSpy).toHaveBeenCalledWith(
+      "Expected a `labeled` or `closed` event, but got `demilestoned`"
     );
 
     warnSpy.mockRestore();
   });
 
   it.skip("reports on missing config", async () => {
-    loadPayload("labeled");
+    loadPayload("issues", "labeled");
     main = require("../main");
 
     const errorSpy = jest.spyOn(console, "error").mockImplementation(jest.fn());

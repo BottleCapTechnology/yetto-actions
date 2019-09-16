@@ -1,0 +1,16 @@
+{
+  "action": "demilestoned",
+  "repository": {
+    "owner": {
+      "login": "user"
+    },
+    "name": "test"
+  },
+  "issue": {
+    "number": 1
+  },
+  "label": { "name": "not-this-product" },
+  "sender": {
+    "type": "User"
+  }
+}

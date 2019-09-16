@@ -11,7 +11,7 @@ describe("Close child issues", () => {
 
   it("replies when a parent issue with children is closed", async () => {
     let config = loadConfig("child_issue.match");
-    main = loadPayload("closed.match");
+    main = loadPayload("issues", "closed.match");
 
     const getConfig = nock("https://api.github.com")
       .persist()
@@ -54,7 +54,7 @@ describe("Close child issues", () => {
 
   it("does nothing when a parent issue with no children is closed", async () => {
     let config = loadConfig("child_issue.missing");
-    main = loadPayload("closed.match");
+    main = loadPayload("issues", "closed.match");
 
     const getConfig = nock("https://api.github.com")
       .persist()
@@ -77,7 +77,7 @@ describe("Close child issues", () => {
 
   it("does nothing when a regular issue is closed", async () => {
     let config = loadConfig("child_issue.match");
-    main = loadPayload("closed.no_match");
+    main = loadPayload("issues", "closed.no_match");
 
     const getConfig = nock("https://api.github.com")
       .persist()

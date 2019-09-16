@@ -9,28 +9,40 @@ const config_file_path = ".github/yetto-actions.config.yml";
 
 async function run() {
   const payload = github.context.payload;
+  const eventName = github.context.eventName;
   const action = payload.action;
   const issue = payload.issue;
   const repository = payload.repository;
 
-  if (action == "labeled") {
-    let config = await fetchConfig(repository.owner.login, repository.name);
+  if (eventName !== "issues" && eventName !== "issue_comment") {
+    console.warn(
+      `Expected an \`issues\` or \`issue_comment\` event, but got \`${eventName}\``
+    );
+    return;
+  }
 
-    label_name = payload.label.name;
+  if (eventName == "issues") {
+    if (action == "labeled") {
+      let config = await fetchConfig(repository.owner.login, repository.name);
 
-    await forEach(config.auto_response, async function(setting) {
-      await applyAutoresponse(label_name, setting, repository, issue);
-    });
-  } else if (action == "closed") {
-    let config = await fetchConfig(repository.owner.login, repository.name);
+      label_name = payload.label.name;
 
-    labels = await map(issue.labels, label => label.name);
+      await forEach(config.auto_response, async function(setting) {
+        await applyAutoresponse(label_name, setting, repository, issue);
+      });
+    } else if (action == "closed") {
+      let config = await fetchConfig(repository.owner.login, repository.name);
 
-    await forEach(config.close_child_issues, async function(setting) {
-      await closeChildIssues(labels, setting, repository);
-    });
-  } else {
-    console.warn(`Wanted a "labeled" or "closed" event, but got "${action}"`);
+      labels = await map(issue.labels, label => label.name);
+
+      await forEach(config.close_child_issues, async function(setting) {
+        await closeChildIssues(labels, setting, repository);
+      });
+    } else {
+      console.warn(
+        `Expected a \`labeled\` or \`closed\` event, but got \`${action}\``
+      );
+    }
   }
 }
 

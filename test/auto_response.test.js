@@ -11,7 +11,7 @@ describe("Autoresponse", () => {
 
   it("replies when a matching label is given", async () => {
     let config = loadConfig("auto_response.match");
-    main = loadPayload("labeled");
+    main = loadPayload("issues", "labeled");
 
     const getConfig = nock("https://api.github.com")
       .persist()
@@ -40,7 +40,7 @@ describe("Autoresponse", () => {
 
   it("does nothing when no matching label is given", async () => {
     let config = loadConfig("auto_response.no_match");
-    main = loadPayload("labeled");
+    main = loadPayload("issues", "labeled");
 
     const getConfig = nock("https://api.github.com")
       .persist()

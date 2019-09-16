@@ -6,11 +6,14 @@ const nock = require("nock");
 const OLD_ENV = process.env;
 
 const FIXTURES_DIR = path.join(__dirname, "fixtures");
-exports.loadPayload = function loadPayload(fixture) {
+exports.loadPayload = function loadPayload(dir, fixture) {
+  delete process.env.GITHUB_EVENT_NAME;
   delete process.env.GITHUB_EVENT_PATH;
+  process.env.GITHUB_EVENT_NAME = dir;
   process.env.GITHUB_EVENT_PATH = path.join(
     FIXTURES_DIR,
     "payloads",
+    dir,
     `${fixture}.json`
   );
 
