@@ -25,6 +25,7 @@
   "homepage": "https://github.com/BottleCapTechnology/yetto-actions",
   "devDependencies": {
     "decache": "^4.5.1",
+    "jest": "^24.9.0",
     "nock": "^11.3.3",
     "prettier": "1.16.1"
   },
