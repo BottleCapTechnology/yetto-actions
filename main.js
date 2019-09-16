@@ -141,7 +141,7 @@ function hasLabel(labels, label) {
 }
 
 async function applyCommand(body, setting, repository, issue) {
-  let command = setting.on;
+  let command = setting.on_phrase;
   let lastCharacters = body.slice(-command.length);
 
   if (lastCharacters == command) {

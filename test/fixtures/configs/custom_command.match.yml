@@ -1,4 +1,4 @@
 custom_command:
-  - on: "[/ping on-call]"
+  - on_phrase: "[/ping on-call]"
     create_comment: |
       @BottleCapTechnology/core, this is your area of expertise, right? Can you help out?
