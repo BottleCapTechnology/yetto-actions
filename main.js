@@ -1,6 +1,6 @@
 const github = require("@actions/github");
 const process = require("process");
-const { forEach } = require("p-iteration");
+const { forEach, map } = require("p-iteration");
 const safeLoad = require("js-yaml").safeLoad;
 
 const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
@@ -24,9 +24,7 @@ async function run() {
   } else if (action == "closed") {
     let config = await fetchConfig(repository.owner.login, repository.name);
 
-    labels = issue.labels.map(function(label) {
-      return label.name;
-    });
+    labels = await map(issue.labels, label => label.name);
 
     await forEach(config.close_child_issues, async function(setting) {
       await closeChildIssues(labels, setting, repository);
