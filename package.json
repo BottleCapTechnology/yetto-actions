@@ -5,6 +5,9 @@
   "description": "Actions catered towards users of Yetto and support teams ",
   "main": "./main.js",
   "scripts": {
+    "version:major": "npm version major && git add && git commit -m 'major version bump' && git push --tags origin HEAD:production",
+    "version:minor": "npm version minor && git add && git commit -m 'minor version bump' && git push --tags origin HEAD:production",
+    "version:patch": "npm version patch && git add && git commit -m 'patch version bump' && git push --tags origin HEAD:production",
     "test": "jest",
     "lint:test": "prettier --check ./**/*.js ",
     "lint:fix": "prettier --write ./**/*.js"
