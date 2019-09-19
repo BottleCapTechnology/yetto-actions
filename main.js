@@ -5,7 +5,7 @@ const safeLoad = require("js-yaml").safeLoad;
 
 const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
 
-const config_file_path = ".github/yetto-actions.config.yml";
+const configFilePath = ".github/yetto-actions.config.yml";
 
 async function run() {
   const payload = github.context.payload;
@@ -39,9 +39,7 @@ async function run() {
         await closeChildIssues(labels, setting, repository);
       });
     } else {
-      console.warn(
-        `Expected a \`labeled\` or \`closed\` event, but got \`${action}\``
-      );
+      console.warn(`Received \`${action}\` on \`${eventName}\`, skipping...`);
     }
   } else if (eventName == "issue_comment") {
     if (action == "created") {
@@ -52,6 +50,8 @@ async function run() {
       await forEach(config.custom_command, async function(setting) {
         await applyCommand(body, setting, repository, issue);
       });
+    } else {
+      console.warn(`Received \`${action}\` on \`${eventName}\`, skipping...`);
     }
   }
 }
@@ -62,7 +62,7 @@ async function fetchConfig(owner, repo) {
     const response = await octokit.repos.getContents({
       owner: owner,
       repo: repo,
-      path: config_file_path,
+      path: configFilePath,
       ref: github.context.sha
     });
 
@@ -71,7 +71,7 @@ async function fetchConfig(owner, repo) {
     return safeLoad(config_contents);
   } catch (err) {
     if (err.status == 404) {
-      console.error(`${err.status}: ${config_file_path} not found`);
+      console.error(`${err.status}: ${configFilePath} not found`);
     } else {
       console.error(`${err.status}: ${err.message}`);
     }
