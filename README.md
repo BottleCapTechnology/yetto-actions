@@ -2,7 +2,7 @@
 
 We've created our own [GitHub Actions](https://github.com/features/actions) to help you get the most out of your Yetto installation.
 
-For detailed help, why not check out [our documentation](https://docs.yettoapp.com/incorporating-our-github-actions/)?
+For detailed help, [check out our documentation](https://docs.yettoapp.com/incorporating-our-github-actions/).
 
 ## Usage
 

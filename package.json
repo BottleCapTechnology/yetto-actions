@@ -1,7 +1,7 @@
 {
   "name": "yetto-actions",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.2",
   "description": "Actions catered towards users of Yetto and support teams ",
   "main": "./main.js",
   "scripts": {
