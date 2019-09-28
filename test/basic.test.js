@@ -28,7 +28,7 @@ describe("Basic tests", () => {
     await main.run();
 
     expect(warnSpy).toHaveBeenCalledWith(
-      "Expected a `labeled` or `closed` event, but got `demilestoned`"
+      "Received `demilestoned` on `issues`, skipping..."
     );
 
     warnSpy.mockRestore();
