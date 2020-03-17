@@ -4,6 +4,10 @@ const nock = require("nock");
 describe("Basic tests", () => {
   let main;
 
+  afterEach(() => {
+    nock.cleanAll();
+  });
+
   it("assures me that it only runs on relevant events", async () => {
     loadPayload("gollum", "other");
     main = require("../main");
@@ -34,7 +38,7 @@ describe("Basic tests", () => {
     warnSpy.mockRestore();
   });
 
-  it.skip("reports on missing config", async () => {
+  it("reports on missing config", async () => {
     loadPayload("issues", "labeled");
     main = require("../main");
 
@@ -43,7 +47,7 @@ describe("Basic tests", () => {
     nock("https://api.github.com")
       .persist()
       .get(
-        "/repos/user/test/contents/.github/yetto-actions.config.yml?ref=cafebabe"
+        "/repos/user/test/contents/.github%2Fyetto-actions.config.yml?ref=cafebabe"
       )
       .reply(404, {});
 

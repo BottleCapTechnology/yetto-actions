@@ -16,7 +16,7 @@ describe("Close child issues", () => {
     const getConfig = nock("https://api.github.com")
       .persist()
       .get(
-        "/repos/user/test/contents/.github/yetto-actions.config.yml?ref=cafebabe"
+        "/repos/user/test/contents/.github%2Fyetto-actions.config.yml?ref=cafebabe"
       )
       .reply(200, { content: config });
 
@@ -45,7 +45,7 @@ describe("Close child issues", () => {
     const getConfig = nock("https://api.github.com")
       .persist()
       .get(
-        "/repos/user/test/contents/.github/yetto-actions.config.yml?ref=cafebabe"
+        "/repos/user/test/contents/.github%2Fyetto-actions.config.yml?ref=cafebabe"
       )
       .reply(200, { content: config });
 

@@ -1,57 +1,66 @@
-const github = require("@actions/github");
+const { Toolkit } = require("actions-toolkit");
+const { Octokit } = require("@octokit/rest");
+
 const process = require("process");
 const { forEach, map } = require("p-iteration");
 const safeLoad = require("js-yaml").safeLoad;
 
-const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
+const tools = new Toolkit();
+const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 
 const configFilePath = ".github/yetto-actions.config.yml";
 
 async function run() {
-  const payload = github.context.payload;
-  const eventName = github.context.eventName;
+  const payload = tools.context.payload;
+  const event = tools.context.event;
   const action = payload.action;
   const issue = payload.issue;
   const repository = payload.repository;
 
-  if (eventName !== "issues" && eventName !== "issue_comment") {
+  if (event !== "issues" && event !== "issue_comment") {
     console.warn(
-      `Expected an \`issues\` or \`issue_comment\` event, but got \`${eventName}\``
+      `Expected an \`issues\` or \`issue_comment\` event, but got \`${event}\``
     );
     return;
   }
 
-  if (eventName == "issues") {
+  if (event == "issues") {
     if (action == "labeled") {
       const config = await fetchConfig(repository.owner.login, repository.name);
 
-      labelName = payload.label.name;
+      if (config != null) {
+        labelName = payload.label.name;
 
-      await forEach(config.auto_response, async function(setting) {
-        await applyAutoresponse(labelName, setting, repository, issue);
-      });
+        await forEach(config.auto_response, async function(setting) {
+          await applyAutoresponse(labelName, setting, repository, issue);
+        });
+      }
     } else if (action == "closed") {
       const config = await fetchConfig(repository.owner.login, repository.name);
 
-      labels = await map(issue.labels, label => label.name);
+      if (config != null) {
+        labels = await map(issue.labels, label => label.name);
 
-      await forEach(config.close_child_issues, async function(setting) {
-        await closeChildIssues(labels, setting, repository);
-      });
+        await forEach(config.close_child_issues, async function(setting) {
+          await closeChildIssues(labels, setting, repository);
+        });
+      }
     } else {
-      console.warn(`Received \`${action}\` on \`${eventName}\`, skipping...`);
+      console.warn(`Received \`${action}\` on \`${event}\`, skipping...`);
     }
-  } else if (eventName == "issue_comment") {
+  } else if (event == "issue_comment") {
     if (action == "created") {
       const config = await fetchConfig(repository.owner.login, repository.name);
 
-      let body = payload.comment.body;
+      if (config != null) {
+        let body = payload.comment.body;
 
-      await forEach(config.custom_command, async function(setting) {
-        await applyCommand(body, setting, repository, issue);
-      });
+        await forEach(config.custom_command, async function(setting) {
+          await applyCommand(body, setting, repository, issue);
+        });
+      }
     } else {
-      console.warn(`Received \`${action}\` on \`${eventName}\`, skipping...`);
+      console.warn(`Received \`${action}\` on \`${event}\`, skipping...`);
     }
   }
 }
@@ -63,7 +72,7 @@ async function fetchConfig(owner, repo) {
       owner: owner,
       repo: repo,
       path: configFilePath,
-      ref: github.context.sha
+      ref: tools.context.sha
     });
 
     config_contents = Buffer.from(response.data.content, "base64").toString();
@@ -75,7 +84,7 @@ async function fetchConfig(owner, repo) {
     } else {
       console.error(`${err.status}: ${err.message}`);
     }
-    return err;
+    return null;
   }
 }
 
